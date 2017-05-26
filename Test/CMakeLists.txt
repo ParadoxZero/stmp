@@ -1,0 +1,11 @@
+
+
+
+add_executable(test_utility_get_word test_utility_get_word.c)
+target_link_libraries(test_utility_get_word stmp_utility)
+
+add_executable(test_utility_get_all_lines test_utility_get_all_lines.c)
+target_link_libraries(test_utility_get_all_lines stmp_utility)
+
+add_executable(test_get_output_file_name test_get_output_file_name.c)
+target_link_libraries(test_get_output_file_name stmp_process)
