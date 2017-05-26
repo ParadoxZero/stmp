@@ -8,6 +8,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "stmp_utility.h"
+
 struct smtp_MACROTABLE{
     char* name;
     char **definition;
@@ -27,8 +29,11 @@ int process_source(char *const path);
 
 int parse_macro_definitions(char *const *const source_lines);
 
-int expand_macro(char *const name, struct arg_table *const arguements, char *buffer, int buffer_size);
+int expand_macro(char *const name, struct stmp_arg_table *const arguements, char *buffer, int buffer_size);
 
+/*
+ * Description: Takes the path as input and adds a suffix to it.
+ */
 int get_output_name(char *const path, char *output_filename);
 
 #endif //MACRO_PROSSESOR_STMP_PROCESS_H

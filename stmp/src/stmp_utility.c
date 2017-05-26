@@ -25,9 +25,10 @@ int get_all_words(char *const source, char **buffer, int buffer_size){
         return -1;
     }
     buffer[0][0] = '\0';
-
+    int start;
+    for (start = 0; source[start] == ' ' ; ++start);
     int k = 0;
-    for (int i = 0; source[i] != '\0' ; ++i) {
+    for (int i = start; source[i] != '\0' ; ++i) {
 
         if (j > buffer_size){
             fprintf(stderr, "Buffer overflow");
@@ -37,6 +38,12 @@ int get_all_words(char *const source, char **buffer, int buffer_size){
         /* word finished, switching to next placeholder */
         if(source[i] == ' '){
             buffer[j][k] = '\0';
+
+            while(source[++i]==' ');
+            if(source[i] == '\0')
+                break;
+            i--;
+
             j++;
             buffer[j] = (char *) malloc(sizeof(char)*WORD_SIZE);
             if (buffer[j] == NULL){
@@ -45,6 +52,11 @@ int get_all_words(char *const source, char **buffer, int buffer_size){
             }
             buffer[j][0] = '\0';
             k = 0;
+
+            while(source[++i]==' ');
+            if(source[i] == '\0')
+                break;
+            i--;
         }
         else {
             buffer[j][k] = source[i];

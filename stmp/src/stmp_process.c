@@ -6,6 +6,8 @@
 
 #define MAX_PATH_SIZE 255
 #define FILE_SUFFIX "_STMP_OUT"
+#define LINE_BUFFER_SIZE 3000
+#define WORD_BUFFER_SIZE 300
 
 int get_output_name(char *const path, char *output_filename){
     strcpy(output_filename,path);
@@ -41,15 +43,22 @@ int get_output_name(char *const path, char *output_filename){
     return 0;
 }
 
+int free_string_array(char **string, const int size){
+    for (int i = 0; i < size; ++i) {
+        free(string[i]);
+    }
+}
+
 int process_source(char *const path){
     char output_filename[MAX_PATH_SIZE];
     if(get_output_name(path,output_filename)==-1){
         return -1;
     }
 
-    FILE *fp = fopen(path,"r");
-    if (fp == NULL){
-        perror("stmp");
+    char *lines_buffer[LINE_BUFFER_SIZE] = {NULL};
+    int line_count = get_all_lines(path,lines_buffer,LINE_BUFFER_SIZE);
+    if (line_count == -1){
+        fprintf(stderr,"Unable to retrieve source.\n");
         return -1;
     }
 
@@ -57,6 +66,23 @@ int process_source(char *const path){
     if (output == NULL){
         perror("stmp");
         return -1;
+    }
+
+    char *word_buffer[WORD_BUFFER_SIZE] = {NULL};
+    for (int i = 0; i < line_count; ++i) {
+        int word_count = get_all_words(lines_buffer[i],word_buffer,WORD_BUFFER_SIZE);
+        if( word_count == -1){
+            return -1;
+        }
+
+        for (int j = 0; j < word_count ; ++j) {
+            switch (lines_buffer[i][0])
+            if (strcmp(word_buffer[i],"MACRO")){
+
+            }
+        }
+
+        free_string_array(word_buffer,WORD_BUFFER_SIZE);
     }
 
 

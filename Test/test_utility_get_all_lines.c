@@ -7,13 +7,15 @@
 #include "../stmp/src/stmp_utility.h"
 
 int main(){
-    char source[3][20] = {"Hello world good",
+    char source[5][20] = {"Hello world good",
                           "Like My demons",
+                          "",
+                          "",
                           "I am cool" };
     FILE *fp = fopen("testfile.dat","w");
     if(fp == NULL)
         return -1;
-    for(int i=0; i < 3 ; ++i){
+    for(int i=0; i < 5 ; ++i){
         fputs(&source[i],fp);
         fprintf(fp,"\n");
     }
@@ -31,7 +33,7 @@ int main(){
         //return -1;
     }
 
-    for (int i = 0; i < 3 ; ++i) {
+    for (int i = 0; i < 5 ; ++i) {
         printf("\nOriginal: %s", source[i]);
         printf("\nRetrieved: %s", buffer[i]);
         if(strcmp(source[i],buffer[i]) != 0)
