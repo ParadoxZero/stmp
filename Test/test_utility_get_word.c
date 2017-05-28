@@ -5,22 +5,27 @@
 #include "../stmp/src/stmp_utility.h"
 
 int main(){
-    char source[3][100] = {"    Hello    world    good     !" ,
-                           "# Hello world     p ",
-                           "Hel wr k   lk    "};
-    for (int k = 0; k < 3 ; ++k) {
+    int num = 4;
+    int ret = 0;
+    char source[4][100] = {"    Hello    world    good     !" ,
+                           "lol i good * # Hello world     p ",
+                           "  Hel wr k   lk    ",
+                           "   #ho lo"};
+    int wc [4] = {4,4,4,0};
+    for (int k = 0; k < num ; ++k) {
         char *buff[250];
         int count = get_all_words(source[k],buff,250);
         print_string_array(buff, count);
-        if (count != 4) {
-            return -1;
+        if (count != wc[k]) {
+            ret = -1;
         }
         for (int i = 0; i < count; ++i) {
             int j;
             for (j = 0; buff[i][j]!='\0'; ++j);
             if (j < 1)
-                return -1;
+                if(buff[i][j] == ' ')
+                    ret = -1;
         }
     }
-    return 0;
+    return ret;
 }

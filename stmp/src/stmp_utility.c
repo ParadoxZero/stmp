@@ -1,6 +1,6 @@
-//
-// Created by Sidhin Thomas on 23/05/17.
-//
+/*
+ * Copyright (C) 2017 Sidhin S Thomas. All rights reserved.
+ */
 
 #include "stmp_utility.h"
 
@@ -28,6 +28,7 @@ int get_all_words(char *const source, char **buffer, int buffer_size){
     int start;
     for (start = 0; source[start] == ' ' ; ++start);
     int k = 0;
+    int comment_flag = 0;
     for (int i = start; source[i] != '\0' ; ++i) {
 
         if (j > buffer_size){
@@ -35,6 +36,14 @@ int get_all_words(char *const source, char **buffer, int buffer_size){
             return -1;
         }
 
+        if(source[i]=='#'||source[i]==';'){
+            /* skip over line comments */
+            free(buffer[j]);
+            buffer[j] = NULL;
+            j--;
+            comment_flag = 1;
+            break;
+        }
         /* word finished, switching to next placeholder */
         if(source[i] == ' '){
             buffer[j][k] = '\0';
@@ -53,17 +62,14 @@ int get_all_words(char *const source, char **buffer, int buffer_size){
             buffer[j][0] = '\0';
             k = 0;
 
-            while(source[++i]==' ');
-            if(source[i] == '\0')
-                break;
-            i--;
         }
         else {
             buffer[j][k] = source[i];
             k++;
         }
     }
-    buffer[j][k]='\0';
+    if(comment_flag==0)
+        buffer[j][k]='\0';
     return j+1;
 }
 
@@ -114,4 +120,11 @@ int get_all_lines(char *const path, char **buffer, const int buffer_size){
     }
 
     return buff_index +1 ;
+}
+
+int startsWith(const char *str, const char *pre)
+{
+    size_t lenpre = strlen(pre),
+            lenstr = strlen(str);
+    return lenstr < lenpre ? 0 : strncmp(pre, str, lenpre) == 0;
 }

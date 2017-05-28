@@ -10,6 +10,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 /*
  *  Description: Function will take a character array as input
@@ -47,7 +48,8 @@ int get_all_lines(char *const path, char **buffer, const int buffer_size);
  */
 void print_string_array(char *const *src, const int size);
 
-/* Constants used */
+
+int startsWith(const char *str, const char *pre);
 
 
 #endif //MACRO_PROSSESOR_UTILITY_H

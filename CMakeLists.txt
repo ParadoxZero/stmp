@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.6)
-project(macro_prossesor)
+project(stmp)
 
 set(CMAKE_C_STANDARD 99)
 
 add_subdirectory (stmp/src)
-
+configure_file(sample/simple_macro.asm sample/simple_macro.asm COPYONLY)
 enable_testing()
 
 add_subdirectory (Test)
