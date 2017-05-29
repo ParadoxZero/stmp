@@ -9,3 +9,6 @@ target_link_libraries(test_utility_get_all_lines stmp_utility)
 
 add_executable(test_get_output_file_name test_get_output_file_name.c)
 target_link_libraries(test_get_output_file_name stmp_process stmp_utility)
+
+add_executable(test_parse_macro test_parse_macro)
+target_link_libraries(test_parse_macro stmp_process stmp_utility)

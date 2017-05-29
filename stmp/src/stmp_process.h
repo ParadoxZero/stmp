@@ -11,11 +11,17 @@
 #include "stmp_utility.h"
 #include "MACRO_DEF_LANGUAGE.h"
 
+#define MAX_PATH_SIZE 255
+#define FILE_SUFFIX "_STMP_OUT"
+#define LINE_BUFFER_SIZE 3000
+#define WORD_BUFFER_SIZE 300
+
 struct stmp_MACROTABLE{
     char* name;
     char **definition;
     char **arg_list;
     int arg_count;
+    int def_count;
 };
 
 struct stmp_arg_table {

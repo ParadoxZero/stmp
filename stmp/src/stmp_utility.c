@@ -118,8 +118,8 @@ int get_all_lines(char *const path, char **buffer, const int buffer_size){
             return -1;
         }
     }
-
-    return buff_index +1 ;
+    fprintf(DEBUG_LOG_OUTPUT,"\nCount: %d\n",buff_index);
+    return buff_index ;
 }
 
 int startsWith(const char *str, const char *pre)

@@ -2,13 +2,9 @@
  * Copyright (C) 2017 Sidhin S Thomas. All rights reserved.
  */
 
-#include <stdbool.h>
 #include "stmp_process.h"
 
-#define MAX_PATH_SIZE 255
-#define FILE_SUFFIX "_STMP_OUT"
-#define LINE_BUFFER_SIZE 3000
-#define WORD_BUFFER_SIZE 300
+
 
 
 int get_output_name(char *const path, char *output_filename){
@@ -90,7 +86,7 @@ int process_source(char *const path){
             return -1;
         }
 
-        if (strcmp(word_buffer[2],MACRO)) {
+        if (strcmp(word_buffer[2],MACRO)==0) {
             success = parse_macro_definitions(lines_buffer, &i, line_count, macrotable, &M_count, 255);
         }
         else {
@@ -136,14 +132,16 @@ int check_macro_called(struct stmp_MACROTABLE pMACROTABLE[255], int count, char 
     return -1;
 }
 
+
 int parse_macro_definitions(char *source_lines[3000], int *index, int max_lines, struct stmp_MACROTABLE table[255],
                             int *table_size, int max_table_size) {
-    char *word_buffer[300];
+    char *word_buffer[300] = {NULL};
     int line_no = *index;
     int tab_size = *table_size;
 
     int word_count = get_all_words(source_lines[line_no],word_buffer,300);
-    if (word_count > 2) {
+    if (word_count >= 2) {
+        table[*table_size].name = (char*) malloc(sizeof(char)*WORD_SIZE);
         strcpy(table[*table_size].name, word_buffer[0]);
         table[tab_size].arg_count = word_count - 2;
         table[tab_size].arg_list = (char **) malloc(sizeof(char) * table[tab_size].arg_count);
@@ -154,7 +152,7 @@ int parse_macro_definitions(char *source_lines[3000], int *index, int max_lines,
     }
     else {
         free_string_array(word_buffer,300);
-        fprintf(stderr, "Error reading macro at line %d.", line_no);
+        fprintf(stderr, "Error reading macro at line %d: %s\n", line_no, source_lines[line_no]);
         return -1;
     }
     free_string_array(word_buffer,300);
@@ -165,16 +163,17 @@ int parse_macro_definitions(char *source_lines[3000], int *index, int max_lines,
     while(line_no < max_lines){
         word_count = get_all_words(source_lines[line_no],word_buffer,300);
         for (int i=0; i < word_count; ++i){
-            if(strcmp(word_buffer[i],MACRO_END)){
+            if(strcmp(word_buffer[i],MACRO_END)==0){
                 cont_loop = 0;
-                break;
             }
         }
         if (cont_loop == 0){
             table[tab_size].definition = (char**) malloc(sizeof(char*)*defintion_line_count);
             for (int i = 0; i < defintion_line_count; ++i) {
+                table[tab_size].definition[i] = (char*) malloc(sizeof(char)*LINE_SIZE);
                 strcpy(table[tab_size].definition[i],definition_buffer[i]);
             }
+            table[tab_size].def_count = defintion_line_count;
             tab_size++;
             *index = line_no;
             *table_size = tab_size;
@@ -187,6 +186,15 @@ int parse_macro_definitions(char *source_lines[3000], int *index, int max_lines,
 
     *index = line_no;
     *table_size = tab_size;
-    return 0;
+    return -1;
 }
 
+
+int expand_macro(struct stmp_MACROTABLE macro_details, struct stmp_arg_table *const arguements, FILE * outputfile){
+    char buffer[300];
+    for (int i = 0; i < macro_details.def_count; ++i) {
+        strcmp(buffer,macro_details.definition[i]);
+        
+    }
+    return -1;
+}
