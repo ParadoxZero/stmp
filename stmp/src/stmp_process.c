@@ -82,11 +82,11 @@ int process_source(char *const path){
         return -1;
     }
 
-    struct stmp_MACROTABLE macrotable[255];
+    struct stmp_MACROTABLE *macrotable = (struct stmp_MACROTABLE*) malloc(sizeof(struct stmp_MACROTABLE)*255);
     int M_count = 0;
-    struct stmp_arg_table arg_table[255];
+    struct stmp_arg_table arg_table[10];
     int arg_count = 0;
-    int success = 1;
+    int success = 0;
     char word_buffer[WORD_BUFFER_SIZE][WORD_SIZE];
 
     for (int i = 0; i < line_count; ++i) {
@@ -95,15 +95,32 @@ int process_source(char *const path){
             return -1;
         }
 
-        if (strcmp(word_buffer[2],MACRO)==0) {
+        if (strcmp(word_buffer[1],MACRO)==0) {
             success = parse_macro_definitions(lines_buffer, &i, line_count, macrotable, &M_count, 255);
+            if(success == -1){
+                break;
+            }
+#ifdef DEBUG
+            for (int j = 0; j < M_count; ++j) {
+                    printf("\n------\nName: %s, arg count: %d\nDefinition:\n", macrotable[j].name, macrotable[j].arg_count);
+                    for (int k = 0; k < macrotable[j].def_count; ++k) {
+                        printf("%s\n", macrotable[j].definition[k]);
+                    }
+                    printf("MACRO END\n-----\n");
+                    fflush(stdout);
+                }
+#endif
+
         }
         else {
-            int macro_called = 0;
             for (int j = 0; j < word_count; ++j) {
                 int m_index;
                 if ((m_index=check_table_macro_name(macrotable,M_count,word_buffer[j]))!=-1){
                     j++;
+                    if(word_count-j != macrotable[m_index].arg_count){
+                        fprintf(stderr,"Illegal macro \'%s\' invocation at line %d",word_buffer[j-1],i+1);
+                        return -1;
+                    }
                     for (int k = 0; k < macrotable[m_index].arg_count; ++k) {
                         strcpy(arg_table[k].arg,macrotable[m_index].arg_list[k]);
                         strcpy(arg_table[k].value,word_buffer[j]);
@@ -112,7 +129,7 @@ int process_source(char *const path){
                     success = expand_macro(macrotable[m_index],arg_table,output);
                 }
                 else{
-                    fprintf(output,"%s",word_buffer[j]);
+                    fprintf(output,"%s ",word_buffer[j]);
                 }
             }
             fprintf(output,"\n");
@@ -120,11 +137,11 @@ int process_source(char *const path){
 
     }
 
-    if (!success){
+    if (success !=0 ){
         fclose(output);
-        if(remove(output_filename)==-1){
+        /*if(remove(output_filename)==-1){
             perror("Unable to delete temporary file.");
-        }
+        }*/
         return -1;
     }
 

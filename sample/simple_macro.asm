@@ -1,12 +1,12 @@
-first MACRO arg1,agr2
-label cmd &arg1 &arg2
-label cmd args args
+first MACRO arg1 arg2
+add( arg1, arg2 )
+cmd( arg2, arg1 )
 MEND
 
 START
 
-first one,two
-
-first three,four
-
+first one two
+lol code
+first three four
+nice try
 END

@@ -20,6 +20,7 @@ int get_all_words(char *const source, char buffer[][WORD_SIZE], int buffer_size)
     int j = 0;
 
     buffer[0][0] = '\0';
+    buffer[1][0] = '\0';
     int start;
     for (start = 0; source[start] == ' ' ; ++start);
     int k = 0;

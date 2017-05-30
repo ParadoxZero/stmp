@@ -11,6 +11,8 @@
 #include <getopt.h>
 #include <stdlib.h>
 
+#include "stmp_process.h"
+
 #define MAJOR_VERSION 1
 #define MINOR_VERSION 0
 #define REVISION 0
@@ -98,7 +100,9 @@ int main(int argc, char *argv[]) {
 
     for (int i = 0; i < path_list_count; ++i) {
         printf("Processing file: %s\n",path_list[i]);
-
+            if(process_source(path_list[i])){
+                return -1;
+            }
     }
     return 0;
 }
