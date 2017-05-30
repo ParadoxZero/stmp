@@ -7,6 +7,7 @@
 
 #define WORD_SIZE 150
 #define LINE_SIZE 500
+#define MAX_PRINT_SIZE 3000
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,7 +27,7 @@
  *      if -1 then it means error occurred
  *
  */
-int get_all_words(char *const source, char **buffer, const int buffer_size);
+int get_all_words(char *const source, char buffer[][WORD_SIZE], const int buffer_size);
 
 /*
  *  Description: Reads from the file pointed by path and fills the
@@ -37,7 +38,7 @@ int get_all_words(char *const source, char **buffer, const int buffer_size);
  *      buffer -> char * array to store the lines
  *      buffer_size -> length of buffer
  */
-int get_all_lines(char *const path, char **buffer, const int buffer_size);
+int get_all_lines(char *const path, char buffer[][LINE_SIZE], const int buffer_size);
 
 /*
  * Description: prints to std output the contents of string buffer.
@@ -46,7 +47,7 @@ int get_all_lines(char *const path, char **buffer, const int buffer_size);
  *      src - array of string
  *      count - size of array
  */
-void print_string_array(char *const *src, const int size);
+void print_string_array(void *lines, const int size, const int line_size);
 
 
 int startsWith(const char *str, const char *pre);

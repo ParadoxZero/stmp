@@ -17,7 +17,7 @@ int main(){
             "MEND");
     fclose(fp);
 
-    char *lines_buffer[LINE_BUFFER_SIZE] = {NULL};
+    char lines_buffer[LINE_BUFFER_SIZE][LINE_SIZE];
     int line_count = get_all_lines("testfile.asm",lines_buffer,LINE_BUFFER_SIZE);
     if (line_count == -1){
         fprintf(stderr,"Unable to retrieve source.\n");
@@ -27,7 +27,7 @@ int main(){
     struct stmp_MACROTABLE macrotable[255];
     int M_count = 0;
     int success = 1;
-    char *word_buffer[WORD_BUFFER_SIZE] = {NULL};
+    char word_buffer[WORD_BUFFER_SIZE][WORD_SIZE];
 
     for (int i = 0; i < line_count; ++i) {
         printf("Processing line %d: %s\n", i, lines_buffer[i]);

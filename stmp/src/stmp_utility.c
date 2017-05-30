@@ -16,14 +16,9 @@ char const FILE_ERROR_MESSAGE[] = "Unable to open the file.\n"
         "Please check the filename and ensure read permission.\n";
 
 
-int get_all_words(char *const source, char **buffer, int buffer_size){
+int get_all_words(char *const source, char buffer[][WORD_SIZE], int buffer_size){
     int j = 0;
 
-    buffer[0] = (char *) malloc(sizeof(char)*WORD_SIZE);
-    if (buffer[0] == NULL){
-        perror("stmp utility");
-        return -1;
-    }
     buffer[0][0] = '\0';
     int start;
     for (start = 0; source[start] == ' ' ; ++start);
@@ -38,10 +33,8 @@ int get_all_words(char *const source, char **buffer, int buffer_size){
 
         if(source[i]=='#'||source[i]==';'){
             /* skip over line comments */
-            free(buffer[j]);
-            buffer[j] = NULL;
-            j--;
             comment_flag = 1;
+            j--;
             break;
         }
         /* word finished, switching to next placeholder */
@@ -54,11 +47,6 @@ int get_all_words(char *const source, char **buffer, int buffer_size){
             i--;
 
             j++;
-            buffer[j] = (char *) malloc(sizeof(char)*WORD_SIZE);
-            if (buffer[j] == NULL){
-                perror("stmp utility");
-                return -1;
-            }
             buffer[j][0] = '\0';
             k = 0;
 
@@ -73,14 +61,15 @@ int get_all_words(char *const source, char **buffer, int buffer_size){
     return j+1;
 }
 
-void print_string_array(char *const *src, const int size) {
+void print_string_array(void *lines, const int size, const int line_size) {
+    char (*src)[line_size] = lines;
     printf("Number of words: %d\nList of words:\n", size);
     for (int i = 0; i < size; ++i) {
         printf("%d) %s\n",i,src[i]);
     }
 }
 
-int get_all_lines(char *const path, char **buffer, const int buffer_size){
+int get_all_lines(char *const path, char buffer[][LINE_SIZE], const int buffer_size){
 
     FILE *fp = fopen(path,"r");
     if (fp == NULL){
@@ -99,7 +88,6 @@ int get_all_lines(char *const path, char **buffer, const int buffer_size){
     while (fgets(string_buffer,LINE_SIZE,fp)!= NULL){
 
 #ifdef DEBUG
-        //Logging
         fprintf(DEBUG_LOG_OUTPUT,"Retrieving line: %s",string_buffer);
 #endif
         for (int i = 0; string_buffer[i]!='\0'; ++i) {
@@ -107,16 +95,10 @@ int get_all_lines(char *const path, char **buffer, const int buffer_size){
                 string_buffer[i] = '\0';
             }
         }
-        buffer[buff_index] = string_buffer;
+        strcpy(buffer[buff_index], string_buffer);
         buff_index++;
         if (buff_index >= buffer_size){
             fprintf(stderr,"Buffer overflow");
-            return -1;
-        }
-        string_buffer = (char *) malloc(sizeof(char)*LINE_SIZE);
-        if (string_buffer == NULL){
-            perror("stmp utility");
-            fprintf(stderr, "Unable to allocate memory.");
             return -1;
         }
     }

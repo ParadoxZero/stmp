@@ -13,9 +13,9 @@ int main(){
                            "   #ho lo"};
     int wc [4] = {4,4,4,0};
     for (int k = 0; k < num ; ++k) {
-        char *buff[250];
+        char buff[250][WORD_SIZE];
         int count = get_all_words(source[k],buff,250);
-        print_string_array(buff, count);
+        print_string_array(buff, count, WORD_SIZE);
         if (count != wc[k]) {
             ret = -1;
         }

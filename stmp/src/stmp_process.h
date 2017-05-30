@@ -35,7 +35,7 @@ struct stmp_arg_table {
  */
 int process_source(char *const path);
 
-int parse_macro_definitions(char *source_lines[], int *index, int max_lines, struct stmp_MACROTABLE count[],
+int parse_macro_definitions(char source_lines[][LINE_SIZE], int *index, int max_lines, struct stmp_MACROTABLE count[],
                             int *table_size, int max_table_size);
 
 int expand_macro(struct stmp_MACROTABLE macro_details, struct stmp_arg_table *const arguements, FILE * outputfile);

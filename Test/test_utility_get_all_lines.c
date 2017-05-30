@@ -23,7 +23,7 @@ int main(){
     if(fclose(fp) != 0)
         return -1;
 
-    char * buffer[10];
+    char buffer[10][LINE_SIZE];
     int ret = get_all_lines("testfile.dat",buffer,10);
     if (ret == -1)
         return -1;
