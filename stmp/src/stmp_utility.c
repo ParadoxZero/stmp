@@ -58,8 +58,10 @@ int get_all_words(char *const source, char buffer[][WORD_SIZE], int buffer_size)
             k++;
         }
         else {
-            buffer[j][k] = '\0';
-            j++;
+            if(k!=0) {
+                buffer[j][k] = '\0';
+                j++;
+            }
             buffer[j][0] = source[i];
             buffer[j][1] = '\0';
             j++;
