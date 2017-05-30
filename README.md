@@ -119,3 +119,8 @@ If comment is placed within the macro **it will be copied** when expanded.
   $ chmod +x run_test.sh
   $ ./run_test.sh
 ```
+## Contributing
+
+Feel free to send a pull request.
+
+for any queries contact me: sidhin.thomas@gmail.com
