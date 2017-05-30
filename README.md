@@ -1,6 +1,20 @@
 # stmp
 Simple macro processor. It will expand MACROs defined in source code and create a new source file.
 
+## Macro Definition Language Syntax
+
+The syntax of defining a macro:
+
+```
+  <macro_name> MACRO <arg1> <arg2> ..... <arg n>
+  statement1
+  statement2
+    .   .
+    .   .
+    .   .
+  MEND
+```
+
 ## How to use
 
 * Basic usage:
@@ -22,6 +36,11 @@ Simple macro processor. It will expand MACROs defined in source code and create 
   Exapmle: stmp example.asm
 ```
 ## How to build
+
+### prerequisite
+
+* CMake
+* Gcc/Clang
 
 1) Download source
 
