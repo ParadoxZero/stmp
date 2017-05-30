@@ -11,12 +11,12 @@
 int main(){
     FILE *fp = fopen("testfile.asm","w");
     fprintf(fp,"test MACRO one two three\n"
-            "Move one\n"
+            "one = one + two\n"
             "add two\n"
             "sub three\n"
             "MEND\n"
             "Mov 99, a\n"
-            "test tt ff gg \n"
+            "test 1 2 3 \n"
             "END\n");
     fclose(fp);
 
@@ -81,7 +81,7 @@ int main(){
                     success = expand_macro(macrotable[m_index],arg_table,stdout);
                 }
                 else{
-                    fprintf(stdout,"%s",word_buffer[j]);
+                    fprintf(stdout,"%s ",word_buffer[j]);
                 }
             }
             fprintf(stdout,"\n");

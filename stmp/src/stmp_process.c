@@ -203,6 +203,7 @@ int parse_macro_definitions(char source_lines[][LINE_SIZE], int *index, int max_
 
     *index = line_no;
     *table_size = tab_size;
+    fprintf(stderr,"Missing \'MEND\' statement");
     return -1;
 }
 

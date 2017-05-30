@@ -52,24 +52,19 @@ int get_all_words(char *const source, char buffer[][WORD_SIZE], int buffer_size)
             k = 0;
 
         }
-        else if (source[i]==','){
+        else if ((source[i] <= 'Z' && source[i] >= 'A')||(source[i]>='a'&&source[i]<='z') ||
+                (source[i]>='0' && source[i] <= '9')|| source[i]=='_') {
+            buffer[j][k] = source[i];
+            k++;
+        }
+        else {
             buffer[j][k] = '\0';
-
-            while(source[++i]==' ');
-            if(source[i] == '\0')
-                break;
-            i--;
-
             j++;
-            buffer[j][0] = ',';
+            buffer[j][0] = source[i];
             buffer[j][1] = '\0';
             j++;
             buffer[j][0] = '\0';
             k = 0;
-        }
-        else {
-            buffer[j][k] = source[i];
-            k++;
         }
     }
     if(comment_flag==0)
@@ -118,7 +113,9 @@ int get_all_lines(char *const path, char buffer[][LINE_SIZE], const int buffer_s
             return -1;
         }
     }
+#ifdef DEBUG
     fprintf(DEBUG_LOG_OUTPUT,"\nCount: %d\n",buff_index);
+#endif
     return buff_index ;
 }
 
