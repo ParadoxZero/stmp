@@ -12,7 +12,9 @@ int main(){
             "sub three\n"
             "MEND\n"
             "Mov 99, a\n"
-            "END");
+            "END\n"
+            "test MACRO lol\n"
+            "MEND");
     fclose(fp);
 
     char *lines_buffer[LINE_BUFFER_SIZE] = {NULL};
@@ -28,7 +30,7 @@ int main(){
     char *word_buffer[WORD_BUFFER_SIZE] = {NULL};
 
     for (int i = 0; i < line_count; ++i) {
-        printf("Processing: %s\n", lines_buffer[i]);
+        printf("Processing line %d: %s\n", i, lines_buffer[i]);
         fflush(stdout);
         int word_count = get_all_words(lines_buffer[i],word_buffer,WORD_BUFFER_SIZE);
         if( word_count == -1){
@@ -39,21 +41,28 @@ int main(){
             success = parse_macro_definitions(lines_buffer, &i, line_count, macrotable, &M_count, 255);
             if(success == -1){
                 fprintf(stderr,"Error parsing.\n");
+                return 0;
+                break;
             }
-            for (int j = 0; j < M_count; ++j) {
-                printf("\nName: %s, arg count: %d\nDefinition:\n",macrotable[j].name, macrotable[j].arg_count);
-                for (int k = 0; k < macrotable[j].def_count ; ++k) {
-                    printf("%s\n",macrotable[j].definition[k]);
+            else {
+                for (int j = 0; j < M_count; ++j) {
+                    printf("\nName: %s, arg count: %d\nDefinition:\n", macrotable[j].name, macrotable[j].arg_count);
+                    for (int k = 0; k < macrotable[j].def_count; ++k) {
+                        printf("%s\n", macrotable[j].definition[k]);
+                    }
+                    printf("MACRO END\n\n");
+                    fflush(stdout);
                 }
-                printf("MACRO END\n\n");
             }
         }
         else {
             printf("Source line: %s\n",lines_buffer[i]);
+            fflush(stdout);
+
         }
     }
 
-    if (!success){
+    if (success!=1){
         return -1;
     }
 

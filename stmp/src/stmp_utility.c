@@ -98,8 +98,10 @@ int get_all_lines(char *const path, char **buffer, const int buffer_size){
     int buff_index = 0;
     while (fgets(string_buffer,LINE_SIZE,fp)!= NULL){
 
+#ifdef DEBUG
         //Logging
         fprintf(DEBUG_LOG_OUTPUT,"Retrieving line: %s",string_buffer);
+#endif
         for (int i = 0; string_buffer[i]!='\0'; ++i) {
             if (string_buffer[i] == '\n'){
                 string_buffer[i] = '\0';

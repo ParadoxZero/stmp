@@ -10,5 +10,15 @@ target_link_libraries(test_utility_get_all_lines stmp_utility)
 add_executable(test_get_output_file_name test_get_output_file_name.c)
 target_link_libraries(test_get_output_file_name stmp_process stmp_utility)
 
-add_executable(test_parse_macro test_parse_macro)
+add_executable(test_parse_macro test_parse_macro.c)
 target_link_libraries(test_parse_macro stmp_process stmp_utility)
+
+add_executable(parse_macro_more_than_one parse_macro_more_than_one.c)
+target_link_libraries(parse_macro_more_than_one stmp_process stmp_utility)
+
+add_executable(parse_macro_one parse_macro_one.c)
+target_link_libraries(parse_macro_one stmp_process stmp_utility)
+
+add_executable(parse_macro_more_than_one_missing_MEND parse_macro_more_than_one_missing_MEND.c)
+target_link_libraries(parse_macro_more_than_one_missing_MEND stmp_process stmp_utility)
+

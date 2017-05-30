@@ -93,7 +93,7 @@ int process_source(char *const path){
             int macro_called = 0;
             for (int j = 0; j < word_count; ++j) {
                 int m_index;
-                if ((m_index=check_macro_called(macrotable,M_count,word_buffer[j]))!=-1){
+                if ((m_index=check_table_macro_name(macrotable,M_count,word_buffer[j]))!=-1){
                     j++;
                     for (int k = 0; k < macrotable[m_index].arg_count; ++k) {
                         strcpy(arg_table[k].arg,macrotable[m_index].arg_list[k]);
@@ -123,9 +123,9 @@ int process_source(char *const path){
     return 0;
 }
 
-int check_macro_called(struct stmp_MACROTABLE pMACROTABLE[255], int count, char *string) {
+int check_table_macro_name(struct stmp_MACROTABLE pMACROTABLE[255], int count, char *string) {
     for (int i = 0; i < count ; ++i) {
-        if(strcmp(pMACROTABLE[i].name,string)){
+        if(strcmp(pMACROTABLE[i].name,string)==0){
             return i;
         }
     }
@@ -141,6 +141,11 @@ int parse_macro_definitions(char *source_lines[3000], int *index, int max_lines,
 
     int word_count = get_all_words(source_lines[line_no],word_buffer,300);
     if (word_count >= 2) {
+        if(check_table_macro_name(table,tab_size,word_buffer[0])!= -1){
+            fprintf(stderr,"The macro \'name\' %s already defined.\n",word_buffer[0]);
+            fflush(stderr);
+            return -1;
+        }
         table[*table_size].name = (char*) malloc(sizeof(char)*WORD_SIZE);
         strcpy(table[*table_size].name, word_buffer[0]);
         table[tab_size].arg_count = word_count - 2;
@@ -192,9 +197,28 @@ int parse_macro_definitions(char *source_lines[3000], int *index, int max_lines,
 
 int expand_macro(struct stmp_MACROTABLE macro_details, struct stmp_arg_table *const arguements, FILE * outputfile){
     char buffer[300];
-    for (int i = 0; i < macro_details.def_count; ++i) {
-        strcmp(buffer,macro_details.definition[i]);
+    char *word[30];
+
+    for (int i = 0; i < macro_details.def_count; ++i) { //loop over each source line
+        strcpy(buffer,macro_details.definition[i]);
+        int count = get_all_words(buffer,word,30);
+
+        for (int j = 0; j < count; ++j) { //to check if arguement present
+            int k;
+
+            for (k = 0; k < macro_details.arg_count; ++k) {
+                if (strcmp(word[j],arguements[k].arg)){
+                    fprintf(outputfile,"%s ",arguements[k].value);
+                }
+            }
+            if(k == macro_details.arg_count){
+                fprintf(outputfile, "%s ",word[j]);
+            }
+        }
+
+
         
     }
-    return -1;
+
+    return 0;
 }
