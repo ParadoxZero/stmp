@@ -8,7 +8,9 @@ sum MACRO a b
 a=a+b
 MEND
 
-test_function(a,b){
+void test_function(int a, int b){
+    int c=5;
     add_and_check a b
-    sum a b
+    sum c b
+    return c
 }

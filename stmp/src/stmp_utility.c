@@ -32,7 +32,7 @@ int get_all_words(char *const source, char buffer[][WORD_SIZE], int buffer_size)
             return -1;
         }
 
-        if(source[i]=='#'||source[i]==';'){
+        if(source[i]=='#'||(source[i]=='/'&& source[i+1]=='/')){
             /* skip over line comments */
             comment_flag = 1;
             j--;
