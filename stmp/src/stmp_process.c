@@ -54,7 +54,7 @@ void free_string_array(char **string, const int size){
     }
 }
 
-static int check_table_macro_name(struct stmp_MACROTABLE pMACROTABLE[255], int count, char *string) {
+int check_table_macro_name(struct stmp_MACROTABLE pMACROTABLE[255], int count, char *string) {
     for (int i = 0; i < count ; ++i) {
         if(strcmp(pMACROTABLE[i].name,string)==0){
             return i;
@@ -134,7 +134,7 @@ int process_source(char *const path){
 
 
 
-int parse_macro_definitions(char source_lines[3000][LINE_SIZE], int *index, int max_lines, struct stmp_MACROTABLE table[255],
+int parse_macro_definitions(char source_lines[][LINE_SIZE], int *index, int max_lines, struct stmp_MACROTABLE table[255],
                             int *table_size, int max_table_size) {
     char word_buffer[300][WORD_SIZE];
     int line_no = *index;
@@ -150,9 +150,7 @@ int parse_macro_definitions(char source_lines[3000][LINE_SIZE], int *index, int 
         table[*table_size].name = (char*) malloc(sizeof(char)*WORD_SIZE);
         strcpy(table[*table_size].name, word_buffer[0]);
         table[tab_size].arg_count = word_count - 2;
-        table[tab_size].arg_list = (char **) malloc(sizeof(char) * table[tab_size].arg_count);
         for (int i = 2; i < word_count; ++i) {
-            table[tab_size].arg_list[i - 2] = (char *) malloc(sizeof(char) * WORD_SIZE);
             strcpy(table[*table_size].arg_list[i - 2], word_buffer[i]);
         }
     }
@@ -172,16 +170,14 @@ int parse_macro_definitions(char source_lines[3000][LINE_SIZE], int *index, int 
             }
         }
         if (cont_loop == 0){
-            table[tab_size].definition = (char**) malloc(sizeof(char*)*defintion_line_count);
             for (int i = 0; i < defintion_line_count; ++i) {
-                table[tab_size].definition[i] = (char*) malloc(sizeof(char)*LINE_SIZE);
                 strcpy(table[tab_size].definition[i],definition_buffer[i]);
             }
             table[tab_size].def_count = defintion_line_count;
             tab_size++;
             *index = line_no;
             *table_size = tab_size;
-            return 1;
+            return 0;
         }
         strcpy(definition_buffer[defintion_line_count],source_lines[line_no]);
         line_no++;
@@ -196,7 +192,7 @@ int parse_macro_definitions(char source_lines[3000][LINE_SIZE], int *index, int 
 
 int expand_macro(struct stmp_MACROTABLE macro_details, struct stmp_arg_table *const arguements, FILE * outputfile){
     char buffer[300];
-    char word[30][300];
+    char word[30][WORD_SIZE];
 
     for (int i = 0; i < macro_details.def_count; ++i) { //loop over each source line
         strcpy(buffer,macro_details.definition[i]);
@@ -206,17 +202,18 @@ int expand_macro(struct stmp_MACROTABLE macro_details, struct stmp_arg_table *co
             int k;
 
             for (k = 0; k < macro_details.arg_count; ++k) {
-                if (strcmp(word[j],arguements[k].arg)){
+                if (strcmp(word[j],arguements[k].arg)==0){
                     fprintf(outputfile,"%s ",arguements[k].value);
+                    break;
                 }
             }
             if(k == macro_details.arg_count){
                 fprintf(outputfile, "%s ",word[j]);
             }
         }
+        fprintf(outputfile,"\n");
 
 
-        
     }
 
     return 0;

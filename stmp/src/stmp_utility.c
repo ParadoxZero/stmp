@@ -51,6 +51,21 @@ int get_all_words(char *const source, char buffer[][WORD_SIZE], int buffer_size)
             k = 0;
 
         }
+        else if (source[i]==','){
+            buffer[j][k] = '\0';
+
+            while(source[++i]==' ');
+            if(source[i] == '\0')
+                break;
+            i--;
+
+            j++;
+            buffer[j][0] = ',';
+            buffer[j][1] = '\0';
+            j++;
+            buffer[j][0] = '\0';
+            k = 0;
+        }
         else {
             buffer[j][k] = source[i];
             k++;
@@ -73,14 +88,14 @@ int get_all_lines(char *const path, char buffer[][LINE_SIZE], const int buffer_s
 
     FILE *fp = fopen(path,"r");
     if (fp == NULL){
-        perror("stmp utility");
+        perror("stmp utility.\n");
         fprintf(stderr, FILE_ERROR_MESSAGE);
         return -1;
     }
 
     char *string_buffer = (char *) malloc(sizeof(char)*LINE_SIZE);
     if (string_buffer == NULL){
-        perror("stmp utility");
+        perror("stmp utility.\n");
         return -1;
     }
 
@@ -98,7 +113,7 @@ int get_all_lines(char *const path, char buffer[][LINE_SIZE], const int buffer_s
         strcpy(buffer[buff_index], string_buffer);
         buff_index++;
         if (buff_index >= buffer_size){
-            fprintf(stderr,"Buffer overflow");
+            fprintf(stderr,"Buffer overflow.\n");
             return -1;
         }
     }
@@ -108,7 +123,6 @@ int get_all_lines(char *const path, char buffer[][LINE_SIZE], const int buffer_s
 
 int startsWith(const char *str, const char *pre)
 {
-    size_t lenpre = strlen(pre),
-            lenstr = strlen(str);
+    size_t lenpre = strlen(pre), lenstr = strlen(str);
     return lenstr < lenpre ? 0 : strncmp(pre, str, lenpre) == 0;
 }

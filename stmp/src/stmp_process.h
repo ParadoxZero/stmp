@@ -15,18 +15,20 @@
 #define FILE_SUFFIX "_STMP_OUT"
 #define LINE_BUFFER_SIZE 3000
 #define WORD_BUFFER_SIZE 300
+#define MAX_DEF_SIZE 500
+#define MAX_ARG_SIZE 50
 
 struct stmp_MACROTABLE{
     char* name;
-    char **definition;
-    char **arg_list;
+    char definition[MAX_DEF_SIZE][LINE_SIZE];
+    char arg_list[MAX_ARG_SIZE][WORD_SIZE];
     int arg_count;
     int def_count;
 };
 
 struct stmp_arg_table {
-    char *arg;
-    char *value;
+    char arg[WORD_SIZE];
+    char value[WORD_SIZE];
 };
 
 /*
@@ -45,7 +47,7 @@ int expand_macro(struct stmp_MACROTABLE macro_details, struct stmp_arg_table *co
  */
 int get_output_name(char *const path, char *output_filename);
 
-int check_macro_called(struct stmp_MACROTABLE pMACROTABLE[255], int count, char *string);
+int check_table_macro_name(struct stmp_MACROTABLE pMACROTABLE[255], int count, char *string);
 
 
 #endif //MACRO_PROSSESOR_STMP_PROCESS_H

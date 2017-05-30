@@ -2,6 +2,10 @@
  * Copyright (C) 2017 Sidhin S Thomas. All rights reserved.
  */
 
+/*
+ * Copyright (C) 2017 Sidhin S Thomas. All rights reserved.
+ */
+
 #include "../stmp/src/stmp_process.h"
 
 int main(){
@@ -13,7 +17,8 @@ int main(){
             "MEND\n"
             "Mov 99, a\n"
             "END\n"
-            "test MACRO lol\n"
+            "nm MACRO lol\n"
+            "lol MACRO loa\n"
             "MEND");
     fclose(fp);
 
@@ -41,8 +46,7 @@ int main(){
             success = parse_macro_definitions(lines_buffer, &i, line_count, macrotable, &M_count, 10);
             if(success == -1){
                 fprintf(stderr,"Error parsing.\n");
-                return 0;
-                break;
+                return 1;
             }
             else {
                 for (int j = 0; j < M_count; ++j) {
@@ -62,10 +66,5 @@ int main(){
         }
     }
 
-    if (success!=1){
-        return -1;
-    }
-
-
-    return 0;
+    return success;
 }
