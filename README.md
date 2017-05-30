@@ -15,6 +15,39 @@ The syntax of defining a macro:
   MEND
 ```
 
+Example:
+
+```c
+  add_and_check MACRO arg1 arg2
+  add(arg1,arg2);
+  check(arg2,arg1);
+  MEND
+
+  sum MACRO a b
+  a=a+b;
+  MEND
+
+  void test_function(int a, int b){
+      int c=5;
+      add_and_check a b
+      sum c b
+      return c;
+  }
+```
+
+stmp would yield an output:
+```c
+void test_function ( int a ,  int b )  {  
+int c = 5 ;  
+add ( a , b ) ;
+check ( b , a ) ; 
+
+c = c + b ;
+
+return c; 
+ }  
+```
+
 ## How to use
 
 * Basic usage:
