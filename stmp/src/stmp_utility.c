@@ -74,11 +74,11 @@ int get_all_words(char *const source, char buffer[][WORD_SIZE], int buffer_size)
             k = 0;
 
         }
-        else if ((source[i] <= 'Z' && source[i] >= 'A')||(source[i]>='a'&&source[i]<='z') ||
-                (source[i]>='0' && source[i] <= '9')|| source[i]=='_') {
+        else { //if ((source[i] <= 'Z' && source[i] >= 'A')||(source[i]>='a'&&source[i]<='z') ||
+               // (source[i]>='0' && source[i] <= '9')|| source[i]=='_') {
             buffer[j][k] = source[i];
             k++;
-        }
+        }/*
         else {
             if(k!=0) {
                 buffer[j][k] = '\0';
@@ -89,7 +89,7 @@ int get_all_words(char *const source, char buffer[][WORD_SIZE], int buffer_size)
             j++;
             buffer[j][0] = '\0';
             k = 0;
-        }
+        }*/
     }
     if(comment_flag==0)
         buffer[j][k]='\0';

@@ -140,7 +140,8 @@ int process_source(char *const path){
                 if ((m_index=check_table_macro_name(macrotable,M_count,word_buffer[j]))!=-1){
                     j++;
                     if(word_count-j != macrotable[m_index].arg_count){
-                        fprintf(stderr,"Illegal macro \'%s\' invocation at line %d",word_buffer[j-1],i+1);
+                        fprintf(stderr,"Illegal macro \'%s\' invocation at line %d.\n required %d parameters but %d supplied",
+                                word_buffer[j-1],i+1,macrotable[m_index].arg_count, word_count-j);
                         return -1;
                     }
                     for (int k = 0; k < macrotable[m_index].arg_count; ++k) {

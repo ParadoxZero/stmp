@@ -10,8 +10,8 @@ int main(){
     char source[4][100] = {"    Hello    world    good     !" ,
                            "lol i good * # Hello world     p ",
                            "  Hel, wr k   lk    ",
-                           "   #ho lo"};
-    int wc [4] = {4,4,5,0};
+                           "create_print_function printDouble \"%lf\" double"};
+    int wc [4] = {4,4,4,4};
     for (int k = 0; k < num ; ++k) {
         char buff[250][WORD_SIZE];
         int count = get_all_words(source[k],buff,250);

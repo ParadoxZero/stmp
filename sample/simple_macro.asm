@@ -1,16 +1,17 @@
 
-add_and_check MACRO arg1 arg2
-add(arg1,arg2);
-check(arg2,arg1);
-MEND
-
-sum MACRO a b
-a=a+b;
-MEND
-
-void test_function(int a, int b){
-    int c=5;
-    add_and_check a b
-    sum c b
-    return c;
+create_size_function MACRO name type
+type name () {
+    return sizeof(type);
 }
+MEND
+
+create_print_function MACRO name format_str type
+void name ( type x ) {
+    printf( format_str , x );
+}
+MEND
+
+create_size_function getDoubleSize double
+create_size_function getIntSize int
+create_print_function printDouble "%lf" double
+create_print_function printInt "%d" int

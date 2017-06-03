@@ -36,7 +36,7 @@
 
 #define MAJOR_VERSION 1
 #define MINOR_VERSION 0
-#define REVISION 0
+#define REVISION 3
 #define PROGRAM_NAME "stmp"
 
 #define MAX_NUM_PATH 255
