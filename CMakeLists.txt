@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.6)
+cmake_minimum_required(VERSION 3.0)
 project(stmp)
 
 set(CMAKE_C_STANDARD 99)
