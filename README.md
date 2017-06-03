@@ -66,6 +66,38 @@ int c = 6;
 ```
 
 If comment is placed within the macro **it will be copied** when expanded.
+
+# Why use MACRO ?
+
+MACROs are usefull when you want to manupulate source code. Repeat certain lines of code, but each copy is slightly different from the last.
+
+For example, suppose you want the following functions:
+```cpp
+double getDoubleSize () { 
+  return sizeof(type); 
+} 
+
+int getIntSize () { 
+  return sizeof(type); 
+} 
+
+void printDouble ( double x ) { 
+  printf( "%lf" , x ); 
+} 
+
+void printInt ( int x ) { 
+  printf( "%d" , x ); 
+} 
+```
+
+Instead of writting the repeative code simply use MACRO:
+
+```
+create_size_function getDoubleSize double
+create_size_function getIntSize int
+create_print_function printDouble "%lf" double
+create_print_function printInt "%d" int
+```
  
 ## How to use
 
