@@ -1,6 +1,7 @@
 
 add_library(stmp_utility stmp_utility.c stmp_utility.h)
 add_library(stmp_process stmp_process.c stmp_process.h)
+target_link_libraries(stmp_process stmp_utility)
 
 add_executable(stmp main.c)
 
