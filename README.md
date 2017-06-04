@@ -1,4 +1,5 @@
 # stmp
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d89bb42013a048638ed47b9adc371692)](https://www.codacy.com/app/ParadoxZero/stmp?utm_source=github.com&utm_medium=referral&utm_content=ParadoxZero/stmp&utm_campaign=badger)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Build Status](https://travis-ci.org/ParadoxZero/stmp.svg?branch=master)](https://travis-ci.org/ParadoxZero/stmp)
 
 Simple macro processor. It will expand MACROs defined in source code and create a new source file.
