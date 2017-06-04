@@ -4,6 +4,7 @@
 
 Simple macro processor. It will expand MACROs defined in source code and create a new source file.
 
+![example](https://media.giphy.com/media/l0IylQXXjX4IvOPAs/giphy.gif)
 #### Notice
 stmp will change the layout of code, especially spacing and tabs hence it should not be used along with languages like python.
 
@@ -77,19 +78,19 @@ MACROs are usefull when you want to manupulate source code. Repeat certain lines
 For example, suppose you want the following functions:
 ```cpp
 double getDoubleSize () { 
-  return sizeof(type); 
+return sizeof(type); 
 } 
 
 int getIntSize () { 
-  return sizeof(type); 
+return sizeof(type); 
 } 
 
 void printDouble ( double x ) { 
-  printf( "%lf" , x ); 
+printf( "%lf" , x ); 
 } 
 
 void printInt ( int x ) { 
-  printf( "%d" , x ); 
+printf( "%d" , x ); 
 } 
 ```
 
