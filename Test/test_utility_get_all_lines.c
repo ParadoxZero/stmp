@@ -16,7 +16,7 @@ int main(){
     if(fp == NULL)
         return -1;
     for(int i=0; i < 5 ; ++i){
-        fputs(&source[i],fp);
+        fputs(source[i],fp);
         fprintf(fp,"\n");
     }
 

@@ -116,6 +116,7 @@ int get_all_lines(char *const path, char buffer[][LINE_SIZE], const int buffer_s
     char *string_buffer = (char *) malloc(sizeof(char)*LINE_SIZE);
     if (string_buffer == NULL){
         perror("stmp utility.\n");
+        fclose(fp);
         return -1;
     }
 
@@ -134,12 +135,16 @@ int get_all_lines(char *const path, char buffer[][LINE_SIZE], const int buffer_s
         buff_index++;
         if (buff_index >= buffer_size){
             fprintf(stderr,"Buffer overflow.\n");
+            free(string_buffer);
+            fclose(fp);
             return -1;
         }
     }
 #ifdef DEBUG
     fprintf(DEBUG_LOG_OUTPUT,"\nCount: %d\n",buff_index);
 #endif
+    fclose(fp);
+    free(string_buffer);
     return buff_index ;
 }
 

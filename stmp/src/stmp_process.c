@@ -162,12 +162,12 @@ int process_source(char *const path){
 
     if (success !=0 ){
         fclose(output);
-        /*if(remove(output_filename)==-1){
+        if(remove(output_filename)==-1){
             perror("Unable to delete temporary file.");
-        }*/
+        }
         return -1;
     }
-
+    fclose(output);
     return 0;
 }
 
