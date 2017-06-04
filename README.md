@@ -1,4 +1,6 @@
 # stmp
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Build Status](https://travis-ci.org/ParadoxZero/stmp.svg?branch=master)](https://travis-ci.org/ParadoxZero/stmp)
+
 Simple macro processor. It will expand MACROs defined in source code and create a new source file.
 
 #### Notice
