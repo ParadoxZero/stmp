@@ -1,4 +1,6 @@
 # stmp
+[![Build Status](https://travis-ci.org/ParadoxZero/stmp.svg?branch=master)](https://travis-ci.org/ParadoxZero/stmp)
+
 Simple macro processor. It will expand MACROs defined in source code and create a new source file.
 
 #### Notice
