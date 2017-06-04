@@ -73,7 +73,7 @@ If comment is placed within the macro **it will be copied** when expanded.
 
 # Why use MACRO ?
 
-MACROs are usefull when you want to manupulate source code. Repeat certain lines of code, but each copy is slightly different from the last.
+MACROs are usefull when you want to manipulate source code. Repeat certain lines of code, but each copy is slightly different from the last.
 
 For example, suppose you want the following functions:
 ```cpp
@@ -94,7 +94,7 @@ printf( "%d" , x );
 } 
 ```
 
-Instead of writting the repeative code simply use MACRO:
+Instead of writting the repetitive code simply use MACRO:
 
 ```
 create_size_function getDoubleSize double
