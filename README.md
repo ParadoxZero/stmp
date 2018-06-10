@@ -159,4 +159,4 @@ create_print_function printInt "%d" int
 
 Feel free to send a pull request.
 
-for any question contact me: sidhin.thomas@gmail.com
+In case of any questions contact me at sidhin.thomas@gmail.com
