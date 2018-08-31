@@ -7,3 +7,9 @@ add_executable(stmp main.c)
 
 target_link_libraries(stmp stmp_utility)
 target_link_libraries(stmp stmp_process)
+
+install(TARGETS stmp stmp_utility stmp_process
+RUNTIME DESTINATION bin
+ARCHIVE DESTINATION lib
+LIBRARY DESTINATION lib
+)
